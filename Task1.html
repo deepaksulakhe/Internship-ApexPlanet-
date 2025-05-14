@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nature Explorer</title>
+    <style>
+       
+        :root {
+            --primary-color: #2c5f2d;
+            --secondary-color: #97bc62;
+            --accent-color: #f0c505;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            background-color: #f4f4f4;
+        }
+
+        header {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 2rem;
+            text-align: center;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        nav {
+            margin-top: 1rem;
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+            transition: color 0.3s ease;
+        }
+
+        nav a:hover {
+            color: var(--accent-color);
+        }
+
+        main {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+        }
+
+        .hero-section {
+            background-color: white;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            margin-bottom: 2rem;
+        }
+
+        .hero-image {
+            width: 100%;
+            height: 400px;
+            object-fit: cover;
+            border-radius: 8px;
+            margin: 1rem 0;
+        }
+
+        .content-section {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+
+        .card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .card img {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+            border-radius: 5px;
+        }
+
+        .button {
+            display: inline-block;
+            padding: 0.8rem 1.5rem;
+            background-color: var(--primary-color);
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+            cursor: pointer;
+            border: none;
+            font-size: 1rem;
+        }
+
+        .button:hover {
+            background-color: var(--secondary-color);
+        }
+
+        footer {
+            background-color: var(--primary-color);
+            color: white;
+            text-align: center;
+            padding: 1.5rem;
+            margin-top: 3rem;
+        }
+
+        .alert-button {
+            margin: 2rem auto;
+            display: block;
+            width: 200px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>🌿 Nature Explorer</h1>
+        <nav>
+            <a href="#home">Home</a>
+            <a href="#gallery">Gallery</a>
+            <a href="#about">About</a>
+            <a href="#contact">Contact</a>
+        </nav>
+    </header>
+
+    <main>
+        <section id="home" class="hero-section">
+            <h2>Discover the Wonders of Nature</h2>
+            <img src="https://fastly.picsum.photos/id/507/1200/400.jpg?hmac=PeGklG2O56njoI0N3dnVWP2iKmX_5B8EWFcfMTKipuU" alt="Nature scene" class="hero-image">
+            <p>Explore breathtaking landscapes and learn about our planet's diverse ecosystems. Join us in our mission to protect and preserve natural wonders for future generations.</p>
+        </section>
+
+        <section id="gallery" class="content-section">
+            <div class="card">
+                <img src="https://fastly.picsum.photos/id/722/600/400.jpg?hmac=V3lvobVnZWm2G1rvOuOCEJ1khq9HmZ3-NgDAjaj0Xhg" alt="Mountain view">
+                <h3>Majestic Mountains</h3>
+                <p>Discover the world's most impressive mountain ranges and their unique ecosystems.</p>
+            </div>
+            <div class="card">
+                <img src="https://fastly.picsum.photos/id/179/601/400.jpg?hmac=OORYDIyyB6CQ66SthmIileomkiWAGKUoHYbnoXKQGMc" alt="Forest path">
+                <h3>Ancient Forests</h3>
+                <p>Explore lush green forests that have stood for thousands of years.</p>
+            </div>
+        </section>
+
+        <section id="about" class="hero-section">
+            <h2>About Our Mission</h2>
+            <p>We are dedicated to promoting environmental awareness and sustainable practices. Our team works with conservation experts worldwide to protect endangered ecosystems.</p>
+            <button class="button alert-button" onclick="showAlert()">Click for Important Message</button>
+        </section>
+
+        <section id="contact" class="hero-section">
+            <h2>Get Involved</h2>
+            <p>Contact us to learn more about our initiatives or volunteer opportunities:</p>
+            <p>📧 Email: <a href="mailto:contact@natureexplorer.com">contact@natureexplorer.com</a></p>
+            <p>🌐 Follow us on <a href="https://twitter.com/nature" target="_blank">Twitter</a></p>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2023 Nature Explorer. All rights reserved.</p>
+        <p>🌱 Together, we can make a difference!</p>
+
+    <script>
+        function showAlert() {
+            alert("🌍 Thank you for caring about our planet! Together we can make a difference!");
+        }
+    </script>
+</body>
+</html>
