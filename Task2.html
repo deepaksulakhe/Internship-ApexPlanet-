@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AppexPlanet - Web Dev Task 2</title>
+    <style>
+        /* CSS Styles */
+        :root {
+            --primary-color: #2d5f5d;
+            --secondary-color: #83a4a3;
+            --accent-color: #ff6b6b;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            line-height: 1.6;
+            background-color: #f9f9f9;
+        }
+
+        /* Flexbox Navigation */
+        .nav-container {
+            background-color: var(--primary-color);
+            padding: 1rem;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-around;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            transition: all 0.3s ease;
+        }
+
+        nav a:hover {
+            background-color: var(--secondary-color);
+            border-radius: 4px;
+        }
+
+        /* CSS Grid Layout */
+        .main-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+        }
+
+        /* Contact Form Styling */
+        .contact-form {
+            background: white;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: var(--primary-color);
+        }
+
+        input, textarea {
+            width: 100%;
+            padding: 0.8rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 1rem;
+        }
+
+        .error {
+            color: var(--accent-color);
+            font-size: 0.9rem;
+            margin-top: 0.3rem;
+            display: none;
+        }
+
+        /* To-Do List Styling */
+        .todo-container {
+            background: white;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        #todo-input {
+            width: 70%;
+            margin-right: 1rem;
+        }
+
+        .todo-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem;
+            background: #f8f9fa;
+            margin: 0.5rem 0;
+            border-radius: 4px;
+        }
+
+        .delete-btn {
+            background: var(--accent-color);
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .main-container {
+                grid-template-columns: 1fr;
+            }
+            
+            nav {
+                flex-direction: column;
+                align-items: center;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="nav-container">
+        <nav>
+            <a href="#home">Home</a>
+            <a href="#contact">Contact</a>
+            <a href="#todo">To-Do</a>
+            <a href="#about">About</a>
+        </nav>
+    </header>
+
+    <main class="main-container">
+        <!-- Contact Form Section -->
+        <section class="contact-form">
+            <h2>Contact Us</h2>
+            <form id="contactForm">
+                <div class="form-group">
+                    <label for="name">Name:</label>
+                    <input type="text" id="name" required>
+                    <div class="error" id="nameError">Please enter your name</div>
+                </div>
+
+                <div class="form-group">
+                    <label for="email">Email:</label>
+                    <input type="email" id="email" required>
+                    <div class="error" id="emailError">Please enter a valid email</div>
+                </div>
+
+                <div class="form-group">
+                    <label for="message">Message:</label>
+                    <textarea id="message" rows="4" required></textarea>
+                    <div class="error" id="messageError">Please enter your message</div>
+                </div>
+
+                <button type="submit" class="delete-btn">Send Message</button>
+            </form>
+        </section>
+
+        <!-- To-Do List Section -->
+        <section class="todo-container">
+            <h2>To-Do List</h2>
+            <div class="todo-input-group">
+                <input type="text" id="todo-input" placeholder="Add new task...">
+                <button onclick="addTodo()" class="delete-btn">Add Task</button>
+            </div>
+            <div id="todo-list"></div>
+        </section>
+    </main>
+
+    <footer style="background-color: var(--primary-color); color: white; text-align: center; padding: 1rem; margin-top: 2rem;">
+        <p>© 2025 AppexPlanet Software Pvt Ltd. All rights reserved.</p>
+    </footer>
+
+    <script>
+        // Form Validation
+        document.getElementById('contactForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            let isValid = true;
+
+            // Name validation
+            const name = document.getElementById('name');
+            if (name.value.trim() === '') {
+                document.getElementById('nameError').style.display = 'block';
+                isValid = false;
+            } else {
+                document.getElementById('nameError').style.display = 'none';
+            }
+
+            // Email validation
+            const email = document.getElementById('email');
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(email.value)) {
+                document.getElementById('emailError').style.display = 'block';
+                isValid = false;
+            } else {
+                document.getElementById('emailError').style.display = 'none';
+            }
+
+            // Message validation
+            const message = document.getElementById('message');
+            if (message.value.trim() === '') {
+                document.getElementById('messageError').style.display = 'block';
+                isValid = false;
+            } else {
+                document.getElementById('messageError').style.display = 'none';
+            }
+
+            if (isValid) {
+                alert('Form submitted successfully!');
+                this.reset();
+            }
+        });
+
+        // To-Do List Functionality
+        function addTodo() {
+            const input = document.getElementById('todo-input');
+            const todoList = document.getElementById('todo-list');
+            
+            if (input.value.trim() === '') {
+                alert('Please enter a task');
+                return;
+            }
+
+            const todoItem = document.createElement('div');
+            todoItem.className = 'todo-item';
+            todoItem.innerHTML = `
+                <span>${input.value}</span>
+                <button class="delete-btn" onclick="removeTodo(this)">Remove</button>
+            `;
+
+            todoList.appendChild(todoItem);
+            input.value = '';
+        }
+
+        function removeTodo(button) {
+            button.parentElement.remove();
+        }
+    </script>
+</body>
+</html>
