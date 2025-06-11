@@ -1,0 +1,607 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Responsive Web Development</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Base styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #1a2a6c, #b21f1f, #1a2a6c);
+            color: #fff;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        header {
+            text-align: center;
+            padding: 40px 0;
+            background: rgba(0, 0, 0, 0.7);
+            border-radius: 15px;
+            margin-bottom: 30px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+        }
+        
+        h1 {
+            font-size: 2.8rem;
+            margin-bottom: 10px;
+            background: linear-gradient(to right, #ff7e5f, #feb47b);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+        }
+        
+        .subtitle {
+            font-size: 1.2rem;
+            color: #ddd;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .section {
+            background: rgba(0, 0, 0, 0.7);
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+        }
+        
+        .section-title {
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+            color: #ff7e5f;
+            border-bottom: 2px solid #ff7e5f;
+            padding-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .section-title i {
+            font-size: 1.4rem;
+        }
+        
+        /* Carousel Styles */
+        .carousel-container {
+            max-width: 800px;
+            margin: 0 auto;
+            position: relative;
+            overflow: hidden;
+            border-radius: 10px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.6);
+        }
+        
+        .carousel {
+            display: flex;
+            transition: transform 0.5s ease-in-out;
+            height: 400px;
+        }
+        
+        .carousel-item {
+            min-width: 100%;
+            height: 100%;
+            position: relative;
+        }
+        
+        .carousel-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+        
+        .carousel-caption {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(0, 0, 0, 0.7);
+            padding: 15px;
+            text-align: center;
+        }
+        
+        .carousel-controls {
+            position: absolute;
+            top: 50%;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            transform: translateY(-50%);
+            padding: 0 20px;
+        }
+        
+        .carousel-btn {
+            background: rgba(255, 126, 95, 0.8);
+            border: none;
+            color: white;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            font-size: 1.5rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+        
+        .carousel-btn:hover {
+            background: rgba(255, 126, 95, 1);
+            transform: scale(1.1);
+        }
+        
+        .carousel-indicators {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 10px;
+        }
+        
+        .indicator {
+            width: 15px;
+            height: 15px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.5);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .indicator.active {
+            background: #ff7e5f;
+            transform: scale(1.2);
+        }
+        
+        /* API Data Section */
+        .api-section {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        
+        .api-controls {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        
+        .api-btn {
+            background: #ff7e5f;
+            border: none;
+            color: white;
+            padding: 12px 25px;
+            border-radius: 30px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 600;
+        }
+        
+        .api-btn:hover {
+            background: #e06b50;
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+        
+        .data-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+        
+        .data-card {
+            background: rgba(50, 50, 50, 0.6);
+            border-radius: 10px;
+            padding: 20px;
+            transition: all 0.3s ease;
+        }
+        
+        .data-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.3);
+            background: rgba(60, 60, 60, 0.8);
+        }
+        
+        .data-card h3 {
+            color: #ff7e5f;
+            margin-bottom: 10px;
+            font-size: 1.3rem;
+        }
+        
+        .data-card p {
+            color: #ddd;
+            margin-bottom: 15px;
+        }
+        
+        .data-card .email {
+            color: #feb47b;
+            font-weight: 500;
+        }
+        
+        /* Responsive Design Section */
+        .responsive-info {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            margin-top: 20px;
+        }
+        
+        .device-card {
+            background: rgba(50, 50, 50, 0.6);
+            border-radius: 10px;
+            padding: 25px;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+        
+        .device-card:hover {
+            transform: scale(1.03);
+            background: rgba(60, 60, 60, 0.8);
+        }
+        
+        .device-card i {
+            font-size: 3rem;
+            margin-bottom: 15px;
+            color: #ff7e5f;
+        }
+        
+        .device-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+            color: #feb47b;
+        }
+        
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 30px 0;
+            color: #ddd;
+            font-size: 1rem;
+            background: rgba(0, 0, 0, 0.7);
+            border-radius: 15px;
+            margin-top: 20px;
+        }
+        
+        /* Media Queries for Responsive Design */
+        /* Tablet */
+        @media (max-width: 900px) {
+            h1 {
+                font-size: 2.4rem;
+            }
+            
+            .section-title {
+                font-size: 1.6rem;
+            }
+            
+            .carousel {
+                height: 350px;
+            }
+            
+            .responsive-info {
+                grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            }
+        }
+        
+        /* Mobile */
+        @media (max-width: 600px) {
+            header {
+                padding: 30px 15px;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+            
+            .subtitle {
+                font-size: 1rem;
+            }
+            
+            .section {
+                padding: 20px 15px;
+            }
+            
+            .section-title {
+                font-size: 1.4rem;
+            }
+            
+            .carousel {
+                height: 250px;
+            }
+            
+            .carousel-controls {
+                padding: 0 10px;
+            }
+            
+            .carousel-btn {
+                width: 40px;
+                height: 40px;
+                font-size: 1.2rem;
+            }
+            
+            .api-controls {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .api-btn {
+                width: 80%;
+                justify-content: center;
+            }
+            
+            .responsive-info {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Responsive Web Development</h1>
+            <p class="subtitle">A demonstration of responsive design, interactive components, and API data fetching - all in one comprehensive project.</p>
+        </header>
+        
+        <!-- Responsive Design Section -->
+        <section class="section">
+            <h2 class="section-title"><i class="fas fa-mobile-alt"></i> Responsive Design</h2>
+            <p>This page adapts to different screen sizes using CSS media queries. Resize your browser to see how the layout changes for mobile, tablet, and desktop devices.</p>
+            
+            <div class="responsive-info">
+                <div class="device-card">
+                    <i class="fas fa-mobile"></i>
+                    <h3>Mobile View</h3>
+                    <p>Optimized for screens up to 600px. Features a single-column layout, larger touch targets, and simplified navigation.</p>
+                </div>
+                
+                <div class="device-card">
+                    <i class="fas fa-tablet-alt"></i>
+                    <h3>Tablet View</h3>
+                    <p>Designed for screens between 601px and 900px. Utilizes a flexible grid with two columns for better space utilization.</p>
+                </div>
+                
+                <div class="device-card">
+                    <i class="fas fa-laptop"></i>
+                    <h3>Desktop View</h3>
+                    <p>For screens larger than 900px. Features a multi-column layout, larger images, and enhanced spacing for optimal reading.</p>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Interactive Carousel Section -->
+        <section class="section">
+            <h2 class="section-title"><i class="fas fa-images"></i> Interactive Image Carousel</h2>
+            <p>A JavaScript-powered carousel with navigation controls and automatic rotation.</p>
+            
+            <div class="carousel-container">
+                <div class="carousel">
+                    <div class="carousel-item">
+                        <img src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80" alt="Mountain Landscape">
+                        <div class="carousel-caption">Beautiful Mountain Landscape</div>
+                    </div>
+                    <div class="carousel-item">
+                        <img src="https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80" alt="Forest">
+                        <div class="carousel-caption">Misty Forest Path</div>
+                    </div>
+                    <div class="carousel-item">
+                        <img src="https://images.unsplash.com/photo-1469474968028-56623f02e42e?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80" alt="Nature">
+                        <div class="carousel-caption">Stunning Natural Beauty</div>
+                    </div>
+                    <div class="carousel-item">
+                        <img src="https://images.unsplash.com/photo-1433086966358-54859d0ed716?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80" alt="Waterfall">
+                        <div class="carousel-caption">Majestic Waterfall</div>
+                    </div>
+                </div>
+                
+                <div class="carousel-controls">
+                    <button class="carousel-btn prev-btn"><i class="fas fa-chevron-left"></i></button>
+                    <button class="carousel-btn next-btn"><i class="fas fa-chevron-right"></i></button>
+                </div>
+                
+                <div class="carousel-indicators">
+                    <div class="indicator active" data-index="0"></div>
+                    <div class="indicator" data-index="1"></div>
+                    <div class="indicator" data-index="2"></div>
+                    <div class="indicator" data-index="3"></div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- API Data Fetching Section -->
+        <section class="section">
+            <h2 class="section-title"><i class="fas fa-database"></i> API Data Fetching</h2>
+            <p>Fetch and display data from a public API in real-time using JavaScript. Click the buttons below to load different types of data.</p>
+            
+            <div class="api-section">
+                <div class="api-controls">
+                    <button class="api-btn" id="fetch-users">
+                        <i class="fas fa-users"></i> Load Users
+                    </button>
+                    <button class="api-btn" id="fetch-posts">
+                        <i class="fas fa-newspaper"></i> Load Posts
+                    </button>
+                    <button class="api-btn" id="fetch-photos">
+                        <i class="fas fa-camera"></i> Load Photos
+                    </button>
+                </div>
+                
+                <div class="data-container" id="data-container">
+                    <div class="data-card">
+                        <h3>API Data Will Appear Here</h3>
+                        <p>Click one of the buttons above to fetch data from the JSONPlaceholder API.</p>
+                        <p>The data will be displayed in responsive cards that adapt to your screen size.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <footer>
+            <p>Responsive Web Development Project | Demonstrates Media Queries, JavaScript Carousel & API Fetching</p>
+            <p>Created with HTML, CSS, and JavaScript</p>
+        </footer>
+    </div>
+
+    <script>
+        // Carousel functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            // Carousel variables
+            const carousel = document.querySelector('.carousel');
+            const items = document.querySelectorAll('.carousel-item');
+            const prevBtn = document.querySelector('.prev-btn');
+            const nextBtn = document.querySelector('.next-btn');
+            const indicators = document.querySelectorAll('.indicator');
+            let currentIndex = 0;
+            const itemCount = items.length;
+            let autoSlide;
+            
+            // Function to update carousel position
+            function updateCarousel() {
+                carousel.style.transform = `translateX(-${currentIndex * 100}%)`;
+                
+                // Update indicators
+                indicators.forEach((indicator, index) => {
+                    if (index === currentIndex) {
+                        indicator.classList.add('active');
+                    } else {
+                        indicator.classList.remove('active');
+                    }
+                });
+            }
+            
+            // Next slide function
+            function nextSlide() {
+                currentIndex = (currentIndex + 1) % itemCount;
+                updateCarousel();
+            }
+            
+            // Previous slide function
+            function prevSlide() {
+                currentIndex = (currentIndex - 1 + itemCount) % itemCount;
+                updateCarousel();
+            }
+            
+            // Event listeners for buttons
+            nextBtn.addEventListener('click', nextSlide);
+            prevBtn.addEventListener('click', prevSlide);
+            
+            // Event listeners for indicators
+            indicators.forEach(indicator => {
+                indicator.addEventListener('click', function() {
+                    currentIndex = parseInt(this.getAttribute('data-index'));
+                    updateCarousel();
+                });
+            });
+            
+            // Auto slide
+            function startAutoSlide() {
+                autoSlide = setInterval(nextSlide, 1500);
+            }
+            
+            function stopAutoSlide() {
+                clearInterval(autoSlide);
+            }
+            
+            // Start auto slide
+            startAutoSlide();
+            
+            // Pause auto slide when hovering over carousel
+            const carouselContainer = document.querySelector('.carousel-container');
+            carouselContainer.addEventListener('mouseenter', stopAutoSlide);
+            carouselContainer.addEventListener('mouseleave', startAutoSlide);
+            
+            // API Fetching functionality
+            const usersBtn = document.getElementById('fetch-users');
+            const postsBtn = document.getElementById('fetch-posts');
+            const photosBtn = document.getElementById('fetch-photos');
+            const dataContainer = document.getElementById('data-container');
+            
+            // Function to fetch data from API
+            async function fetchData(url) {
+                try {
+                    dataContainer.innerHTML = '<div class="data-card"><h3>Loading data...</h3><p>Please wait while we fetch data from the API.</p></div>';
+                    
+                    const response = await fetch(url);
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    
+                    const data = await response.json();
+                    return data.slice(0, 3); // Get first 3 items only
+                } catch (error) {
+                    dataContainer.innerHTML = `<div class="data-card"><h3>Error</h3><p>Failed to fetch data: ${error.message}</p></div>`;
+                    return [];
+                }
+            }
+            
+            // Function to display users
+            async function displayUsers() {
+                const users = await fetchData('https://jsonplaceholder.typicode.com/users');
+                if (users.length > 0) {
+                    dataContainer.innerHTML = users.map(user => `
+                        <div class="data-card">
+                            <h3>${user.name}</h3>
+                            <p>Username: ${user.username}</p>
+                            <p class="email">Email: ${user.email}</p>
+                            <p>Company: ${user.company.name}</p>
+                            <p>City: ${user.address.city}</p>
+                        </div>
+                    `).join('');
+                }
+            }
+            
+            // Function to display posts
+            async function displayPosts() {
+                const posts = await fetchData('https://jsonplaceholder.typicode.com/posts');
+                if (posts.length > 0) {
+                    dataContainer.innerHTML = posts.map(post => `
+                        <div class="data-card">
+                            <h3>${post.title}</h3>
+                            <p>${post.body.substring(0, 150)}...</p>
+                            <p>Post ID: ${post.id}</p>
+                            <p>User ID: ${post.userId}</p>
+                        </div>
+                    `).join('');
+                }
+            }
+            
+            // Function to display photos
+            async function displayPhotos() {
+                const photos = await fetchData('https://jsonplaceholder.typicode.com/photos');
+                if (photos.length > 0) {
+                    dataContainer.innerHTML = photos.map(photo => `
+                        <div class="data-card">
+                            <h3>${photo.title}</h3>
+                            <img src="${photo.thumbnailUrl}" alt="${photo.title}" style="width:100%; border-radius:5px; margin:10px 0;">
+                            <p>Album ID: ${photo.albumId}</p>
+                            <p>Photo ID: ${photo.id}</p>
+                        </div>
+                    `).join('');
+                }
+            }
+            
+            // Event listeners for API buttons
+            usersBtn.addEventListener('click', displayUsers);
+            postsBtn.addEventListener('click', displayPosts);
+            photosBtn.addEventListener('click', displayPhotos);
+        });
+    </script>
+</body>
+</html>
